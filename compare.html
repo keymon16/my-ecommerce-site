@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dynamic Web Solution for E-commerce</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</head>
+<body onload="navInit()">
+<script>document.write(buildHeader('compare'))</script>
+<main class="container">
+<section><h2>Compare</h2><div id="tbl"></div></section>
+<script>
+function render(){
+  const items = STORE.compare.map(id=>STORE.products.find(p=>p.id===id)).filter(Boolean);
+  if(!items.length){ document.getElementById('tbl').innerHTML = '<p>Add items from product cards.</p>'; return; }
+  const headers = ['Image','Title','Category','Brand','Price','Rating','Actions'];
+  const rows = items.map(p=>[
+    `<img src='${p.image}' onerror="this.src='${'https://via.placeholder.com/200x140?text=Product'}'" style='width:120px;border-radius:10px'/>`,
+    p.title, p.category, p.brand, formatINR(priceAfterSale(p)), '★ '+p.rating.toFixed(1),
+    `<button class='btn primary' onclick='addToCart(${p.id})'>Add to Cart</button>`
+  ]);
+  const t = `<table class='table'><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+             <tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  document.getElementById('tbl').innerHTML = t + `<div class='actions' style='margin-top:10px'><button class='btn' onclick='STORE.compare=[];localStorage.setItem("compare","[]");render()'>Clear Compare</button></div>`;
+}
+render();
+</script>
+</main>
+<script>document.write(buildFooter())</script>
+</body></html>

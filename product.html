@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dynamic Web Solution for E-commerce</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</head>
+<body onload="navInit()">
+<script>document.write(buildHeader('shop'))</script>
+<main class="container">
+<section id="wrap"></section>
+<script>
+const wrap = document.getElementById('wrap');
+const id = +new URLSearchParams(location.search).get('id');
+const p = STORE.products.find(x=>x.id===id);
+if(!p){ wrap.innerHTML = '<p>Product not found.</p>'; }
+else{
+  wrap.innerHTML = `<article class="card" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="img"><img src="${p.image}" onerror="this.src='${'https://via.placeholder.com/800x600?text=Product'}'"/></div>
+    <div class="body">
+      <h2>${p.title} ${p.badge?`<span class='badge'>${p.badge}</span>`:''}</h2>
+      <div class="pill">Category: ${p.category} · Brand: ${p.brand} · ★ ${p.rating.toFixed(1)}</div>
+      <p>Premium ${p.category.lower? p.category.lower(): p.category} by ${p.brand}. Fine materials & tailored fit.</p>
+      <h3>${formatINR(priceAfterSale(p))} ${p.sale?`<span class='pill'>MRP <s>${formatINR(p.price)}</s> (-${p.sale}%)</span>`:''}</h3>
+      <div class="actions">
+        <button class="btn primary" onclick="addToCart(${p.id})">Add to Cart</button>
+        <button class="btn" onclick="toggleWishlist(${p.id});toast('Wishlist updated')">♡ Wishlist</button>
+        <button class="btn" onclick="toggleCompare(${p.id});toast('Compare updated')">Compare</button>
+        <a class="btn" href="shop.html?category=${encodeURIComponent(p.category)}">Back to ${p.category}</a>
+      </div>
+    </div>
+  </article>`;
+}
+</script>
+</main>
+<script>document.write(buildFooter())</script>
+</body></html>

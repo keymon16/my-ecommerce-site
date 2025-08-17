@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dynamic Web Solution for E-commerce</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</head>
+<body onload="navInit()">
+<script>document.write(buildHeader('home'))</script>
+<main class="container">
+<section class="hero">
+  <h2>Shop smarter. Fast & modern frontend.</h2>
+  <p>Static categories with real fashion images, cart, wishlist, compare, search, sort, checkout & order confirmation.</p>
+  <div class="actions">
+    <a class="btn primary" href="shop.html">Start Shopping</a>
+    <a class="btn" href="about.html">About</a>
+  </div>
+</section>
+<section>
+  <h3>Featured Categories</h3>
+  <div class="grid" id="featCats"></div>
+</section>
+<section>
+  <h3>Trending Products</h3>
+  <div class="grid" id="featProds"></div>
+</section>
+<script>
+const cats = ['Shirts','Pants','Jackets','Accessories'];
+const catImgs = {
+  Shirts: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=1200',
+  Pants: 'https://images.unsplash.com/photo-1514996937319-344454492b37?w=1200',
+  Jackets: 'https://images.unsplash.com/photo-1542838686-73ca9d21f505?w=1200',
+  Accessories: 'https://images.unsplash.com/photo-1514477917009-389c76a86b68?w=1200'
+};
+document.getElementById('featCats').innerHTML = cats.map(c=>`
+  <article class="card">
+    <a class="img" href="shop.html?category=${encodeURIComponent(c)}"><img src="${catImgs[c]}" onerror="this.src='${'https://via.placeholder.com/800x600?text='+encodeURIComponent(c)}'"/></a>
+    <div class="body"><strong>${c}</strong><a class="btn" href="shop.html?category=${encodeURIComponent(c)}">Shop ${c}</a></div>
+  </article>`).join('');
+
+const rand = [...STORE.products].sort(()=>Math.random()-0.5).slice(8);
+document.getElementById('featProds').innerHTML = rand.map(productCard).join('');
+</script>
+</main>
+<script>document.write(buildFooter())</script>
+</body></html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dynamic Web Solution for E-commerce</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</head>
+<body onload="navInit()">
+<script>document.write(buildHeader('login'))</script>
+<main class="container">
+<section class="hero"><h2>Login</h2><p>Demo only — any username works.</p></section>
+<section>
+  <form class="card body" style="padding:16px;display:grid;gap:10px" onsubmit="event.preventDefault();login(document.getElementById('u').value)">
+    <label>Username<input id="u" placeholder="Type anything"></label>
+    <button class="btn primary">Login</button>
+  </form>
+</section>
+</main>
+<script>document.write(buildFooter())</script>
+</body></html>

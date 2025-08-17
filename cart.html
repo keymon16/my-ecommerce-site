@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dynamic Web Solution for E-commerce</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</head>
+<body onload="navInit()">
+<script>document.write(buildHeader('cart'))</script>
+<main class="container">
+<section><h2>Your Cart</h2><div id="list"></div></section>
+<section class="actions"><a class="btn" href="shop.html">Continue Shopping</a><a class="btn primary" id="goCheckout" href="checkout.html">Checkout</a></section>
+<script>
+function render(){
+  const cont = document.getElementById('list'); if(!STORE.cart.length){ cont.innerHTML='<p>Your cart is empty.</p>'; return; }
+  let subtotal = 0;
+  cont.innerHTML = STORE.cart.map(ci=>{ const p = STORE.products.find(x=>x.id===ci.id); const price = priceAfterSale(p); subtotal += price*ci.qty;
+    return `<article class='card' style='display:flex;gap:10px;align-items:center'>
+      <div class='img' style='width:140px;height:100px'><img src='${p.image}' onerror="this.src='${'https://via.placeholder.com/400x300?text=Product'}'"></div>
+      <div class='body' style='flex:1'>
+        <strong>${p.title}</strong>
+        <div>${formatINR(price)} × <input style="width:60px" value="${ci.qty}" onchange="setQty(${p.id}, +this.value)"></div>
+      </div>
+      <button class='btn' onclick='removeFromCart(${p.id});render()'>Remove</button>
+    </article>`;
+  }).join('') + `<div class='card body' style='padding:16px'><h3>Subtotal: ${formatINR(subtotal)}</h3></div>`;
+  document.getElementById('goCheckout').classList.toggle('hidden', !STORE.cart.length);
+}
+render();
+</script>
+</main>
+<script>document.write(buildFooter())</script>
+</body></html>

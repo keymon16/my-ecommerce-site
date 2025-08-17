@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dynamic Web Solution for E-commerce</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</head>
+<body onload="navInit()">
+<script>document.write(buildHeader('contact'))</script>
+<main class="container">
+<section class="hero"><h2>Contact</h2><p>Send us a message (frontend only).</p></section>
+<section>
+  <form class="card body" style="padding:16px;display:grid;gap:10px" onsubmit="event.preventDefault();toast('Message sent (demo)')">
+    <label>Your Name<input required></label>
+    <label>Email<input type="email" required></label>
+    <label>Message<textarea rows="5" style="width:100%;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:12px;padding:10px"></textarea></label>
+    <button class="btn primary">Send</button>
+  </form>
+</section>
+</main>
+<script>document.write(buildFooter())</script>
+</body></html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dynamic Web Solution for E-commerce</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</head>
+<body onload="navInit()">
+<script>document.write(buildHeader('wishlist'))</script>
+<main class="container">
+<section><h2>Wishlist</h2><div id="list"></div></section>
+<script>
+function render(){
+  const cont = document.getElementById('list');
+  if(!STORE.wishlist.length){ cont.innerHTML='<p>No items in wishlist.</p>'; return; }
+  cont.innerHTML = STORE.wishlist.map(id=>{ const p = STORE.products.find(x=>x.id===id);
+    return `<article class='card' style='display:flex;gap:10px;align-items:center'>
+      <div class='img' style='width:140px;height:100px'><img src='${p.image}' onerror="this.src='${'https://via.placeholder.com/400x300?text=Product'}'"></div>
+      <div class='body' style='flex:1'><strong>${p.title}</strong><div class='pill'>${p.category}</div></div>
+      <button class='btn primary' onclick='addToCart(${p.id});toast("Added to cart")'>Add to Cart</button>
+      <button class='btn' onclick='toggleWishlist(${p.id});render()'>Remove</button>
+    </article>`;
+  }).join('');
+}
+render();
+</script>
+</main>
+<script>document.write(buildFooter())</script>
+</body></html>

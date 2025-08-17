@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dynamic Web Solution for E-commerce</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</head>
+<body onload="navInit()">
+<script>document.write(buildHeader('checkout'))</script>
+<main class="container">
+<section class="hero"><h2>Checkout</h2><p>Enter shipping & payment details (demo only).</p></section>
+<section>
+  <form id="form" class="card body" style="padding:16px;display:grid;gap:10px">
+    <label>Full Name<input required></label>
+    <label>Address Line 1<input required></label>
+    <label>City<input required></label>
+    <label>Pincode<input required></label>
+    <label>Payment Method<select><option>Card</option><option>UPI</option><option>Cash on Delivery</option></select></label>
+    <button class="btn primary">Place Order</button>
+  </form>
+</section>
+<script>
+document.getElementById('form').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  // generate alphanumeric order id
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let id = '#ORD-'; for(let i=0;i<5;i++){ id += chars[Math.floor(Math.random()*chars.length)]; }
+  localStorage.setItem('lastOrderId', id);
+  localStorage.setItem('lastOrderItems', JSON.stringify(STORE.cart));
+  location.href = 'order.html';
+});
+</script>
+</main>
+<script>document.write(buildFooter())</script>
+</body></html>

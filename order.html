@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dynamic Web Solution for E-commerce</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</head>
+<body onload="navInit()">
+<script>document.write(buildHeader('order'))</script>
+<main class="container">
+<section class="hero"><h2>Thank you for your order!</h2><p>Your order has been placed successfully.</p></section>
+<section id="summary"></section>
+<section class="actions"><a class="btn" href="shop.html">Continue Shopping</a></section>
+<script>
+const id = localStorage.getItem('lastOrderId') || '#ORD-XXXXX';
+const items = JSON.parse(localStorage.getItem('lastOrderItems')||'[]');
+let subtotal = 0;
+const rows = items.map(ci=>{ const p = STORE.products.find(x=>x.id===ci.id); const price = priceAfterSale(p); subtotal += price*ci.qty;
+  return `<tr><td>${p.title}</td><td>${ci.qty}</td><td>${formatINR(price)}</td><td>${formatINR(price*ci.qty)}</td></tr>`;
+}).join('');
+document.getElementById('summary').innerHTML = `<div class='card body' style='padding:16px'>
+  <h3>Order ID: <span class='pill'>${id}</span></h3>
+  <table class='table'><thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead><tbody>${rows||'<tr><td colspan=4>No items</td></tr>'}</tbody></table>
+  <h3 style='text-align:right'>Grand Total: ${formatINR(subtotal)}</h3>
+</div>`;
+// Clear cart after order
+STORE.cart = []; localStorage.setItem('cart','[]');
+</script>
+</main>
+<script>document.write(buildFooter())</script>
+</body></html>
